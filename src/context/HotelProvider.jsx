@@ -1,18 +1,27 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 const HotelContext = createContext()
 
 // eslint-disable-next-line react/prop-types
 const HotelProvider = ({children}) => {
-    const [modal, setModal] = useState(undefined)
+    const [user, setUser] = useState('')
+
+    useEffect(() => {
+        getLocalUser()
+    });
+
+    function getLocalUser(){
+        if (localStorage.getItem('user')) {
+            setUser(localStorage.getItem('user'));
+            console.log(user);
+        } 
+    }
 
     return (
-        <HotelContext.Provider value={
-            { 
-                modal, 
-                setModal 
-            }
-        }>
+        <HotelContext.Provider value={{ 
+                user, 
+                setUser
+            }}>
             { children }
         </HotelContext.Provider>
     );

@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import HotelProvider from "../context/HotelProvider";
+import HotelContext from "../context/HotelProvider";
 
 const useHotel = () => {
-    return useContext(HotelProvider)
+    return useContext(HotelContext)
 }
 
 export default useHotel;

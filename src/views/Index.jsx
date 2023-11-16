@@ -1,13 +1,14 @@
-// import useHotel from "../hooks/useHotel";
+import CardHotel from "../components/CardHotel";
 
 export default function Index(){
-    // const {modal} = useHotel();
-
-    // console.log(modal)
 
     return (
         <>
-            <h1>Hola mundo</h1>
+            <div className="mx-auto">
+                <div className="grid grid-cols-12 gap-5 justify-center">
+                    <CardHotel/>
+                </div>
+            </div>
         </>
     );
 }
