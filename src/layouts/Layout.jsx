@@ -1,4 +1,4 @@
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 // import { HotelProvider } from "../context/HotelProvider";
 import { Avatar, Dropdown, Footer, Navbar } from 'flowbite-react';
 import ModalUser from "../components/ModalUser";
@@ -6,7 +6,7 @@ import useHotel from "../hooks/useHotel";
 import { useEffect, useState } from "react";
 
 export default function Layout() {
-	const { user, setUser } = useHotel();
+	const { user, setUser } = useHotel('');
 	const [ name, setName ] = useState('');
 
     const deleteUser = () => {
@@ -21,7 +21,7 @@ export default function Layout() {
 	return (
 		<>
 			<Navbar fluid rounded className="bg-green-600">
-				<NavLink to="/">
+				<Link to="/">
 					<Navbar.Brand>
 							<img src="https://www.svgrepo.com/show/401945/hotel.svg" className="mr-3 h-6 sm:h-9" alt="Flowbite React Logo"
 							/>
@@ -29,7 +29,7 @@ export default function Layout() {
 								HoteleríaLibre
 							</span>
 					</Navbar.Brand>
-				</NavLink>
+				</Link>
 				<div className="flex md:order-2">
 					{
 						name

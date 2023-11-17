@@ -1,20 +1,45 @@
-import { Card } from 'flowbite-react';
+import { Card, Spinner } from 'flowbite-react';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 export default function CardHotel(){
+    const [hotels, setHotels] = useState(0);
+
+    useEffect(() => {
+        getHotels();
+    }, []);
+
+    function getHotels(){
+        fetch('https://bkhoteles.juanflow04flore.repl.co/publicaciones')
+            .then(response => response.json())
+            .then(data => setHotels(data));
+    }
+
     return (
         <>
-            <div className="w-full break-word col-span-12 sm:col-span-6 md:col-span-3">
-                <Card className="w-full" imgAlt="Meaningful alt text for an image that is not purely decorative" imgSrc="https://assets.simpleviewinc.com/simpleview/image/upload/c_limit,h_1200,q_75,w_1200/v1/clients/orlandofl/5900_pool_b92df465-0c67-4161-b8bb-67f9fc301094.jpg">
-                    <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Noteworthy technology acquisitions 2021
-                    </h5>
-                    <p className="font-normal text-gray-700 dark:text-gray-400">
-                        Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-                    </p>
-                    <NavLink className="bg-green-600 p-3 font-medium text-white text-center rounded-full" to="/1">Ver hotel</NavLink>
-                </Card>
-            </div>
+            {
+                hotels
+                ?
+                    hotels.map(hotel => (
+                        <div key={ hotel['_id'] } className="hotel w-full break-word col-span-12 sm:col-span-6 md:col-span-3">
+                            <Card className="w-full card-h" imgAlt="Meaningful alt text for an image that is not purely decorative" imgSrc={ hotel.imagen }>
+                                <div className="w-full h-full flex flex-col justify-between items-baseline">
+                                    <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                        { hotel.hotel.nombre }
+                                    </h5>
+                                    <p className="font-normal text-gray-700 dark:text-gray-400">
+                                        { hotel.descripcion }
+                                    </p>
+                                    <NavLink className="bg-green-600 p-3 font-medium text-white text-center rounded-full w-full" to={ hotel['_id'] }>Ver hotel</NavLink>
+                                </div>
+                            </Card>
+                        </div>
+                    ))
+                :
+                <div className="w-full h-screen flex justify-center items-center break-word col-span-12 sm:col-span-12 md:col-span-12">
+                    <Spinner color="success" aria-label="Success spinner example" size="xl"/>
+                </div>
+            }
         </>    
     );
 }
