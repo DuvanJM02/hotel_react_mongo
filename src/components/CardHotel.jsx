@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 export default function CardHotel(){
     return (
         <>
-            <div className="w-full break-word col-span-6 md:col-span-3">
+            <div className="w-full break-word col-span-12 sm:col-span-6 md:col-span-3">
                 <Card className="w-full" imgAlt="Meaningful alt text for an image that is not purely decorative" imgSrc="https://assets.simpleviewinc.com/simpleview/image/upload/c_limit,h_1200,q_75,w_1200/v1/clients/orlandofl/5900_pool_b92df465-0c67-4161-b8bb-67f9fc301094.jpg">
                     <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         Noteworthy technology acquisitions 2021

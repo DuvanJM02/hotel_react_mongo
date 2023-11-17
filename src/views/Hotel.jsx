@@ -15,7 +15,7 @@ export default function Hotel() {
         <>
             <div className="mx-auto">
                 <div className="grid grid-cols-12 gap-5 justify-center">
-                    <div className="col-span-12 md:col-span-8">
+                    <div className="col-span-12 sm:col-span-6 md:col-span-8">
                         <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
                             <Carousel onSlideChange={(index) => console.log('onSlideChange()', index)}>
                                 <div className="flex items-center h-full justify-center bg-gray-400 dark:bg-gray-700 dark:text-white">
@@ -40,7 +40,7 @@ export default function Hotel() {
                         </div>
                         <p className="my-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde nesciunt magni, dignissimos odit laudantium tempore quas minima architecto aliquid quisquam corporis totam optio natus delectus eius accusantium corrupti reprehenderit praesentium!</p>
                     </div>
-                    <div className="col-span-12 md:col-span-4">
+                    <div className="col-span-12 sm:col-span-6 md:col-span-4">
                         <div className="max-w-full">
                             <div className="mb-2 block">
                                 <h3 className="text-xl font-bold tracking-tight text-gray-900 pb-5">Comentarios</h3>
