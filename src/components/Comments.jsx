@@ -6,14 +6,20 @@ import useHotel from '../hooks/useHotel';
 
 export default function Comments(comentarios) {
     const { id } = useParams();
-    const { getHotel } = useHotel();
+    const { user, getHotel } = useHotel();
 
     useEffect(() => {
         console.log(comentarios);
     }, [comentarios]);
     
     async function handleLike(comment_id){
-        await axios.post(`https://bkhoteles.juanflow04flore.repl.co/publicaciones/${ id }/comentario/${ comment_id }/like`).then(function (response) {
+        await axios.post(`https://bkhoteles.juanflow04flore.repl.co/publicaciones/${ id }/comentario/${ comment_id }/like`, {
+            usuario: {
+                usuario: user,
+                like: 1,
+                dislike: 0
+            }
+        }).then(function (response) {
             // manejar respuesta exitosa
             console.log(response);
             getHotel(id);
@@ -25,7 +31,13 @@ export default function Comments(comentarios) {
     }
 
     async function handleDislike(comment_id){
-        await axios.post(`https://bkhoteles.juanflow04flore.repl.co/publicaciones/${ id }/comentario/${ comment_id }/dislike`).then(function (response) {
+        await axios.post(`https://bkhoteles.juanflow04flore.repl.co/publicaciones/${ id }/comentario/${ comment_id }/like`, {
+            usuario: {
+                usuario: user,
+                like: 0,
+                dislike: 1
+            }
+        }).then(function (response) {
             // manejar respuesta exitosa
             console.log(response);
             getHotel(id);
@@ -34,6 +46,13 @@ export default function Comments(comentarios) {
             // manejar error
             console.log(error);
         })
+    }
+
+    // funcion que recibe dos parametros, el primero es el conjunto de likes por comentario y el segundo el tipo, valida con 1 si es like y 0 si es dislike
+    function calcTotal(likes, type){
+        let li = 0;
+        likes.forEach(element => li += type ? element.like : element.dislike);
+        return li;
     }
 
     return (
@@ -62,13 +81,13 @@ export default function Comments(comentarios) {
                                 </div>
                                 <div className="mt-3 ml-12 inline-flex text-base font-semibold text-gray-900 dark:text-white">
                                     <Button.Group>
-                                        <Button color="gray" onClick={ () => handleLike(comentario['_id']) }>
-                                            <img src="https://www.svgrepo.com/show/521167/like-right.svg" className='w-5' alt="" />
-                                            { comentario.likes }
+                                        <Button color="gray" onClick={ () => handleLike(comentario['_id']) } className={ comentario.likes.map( l => l.usuario == user && l.like == 1 ? 'bg-gray-300' : '') }>
+                                            <img src="https://www.svgrepo.com/show/521167/like-right.svg" className={ comentario.likes.map( l => l.usuario == user ? 'https://www.svgrepo.com/show/503044/like.svg' : 'https://www.svgrepo.com/show/521167/like-right.svg') + " w-5"} alt="" />
+                                            { calcTotal(comentario.likes, 1) }
                                         </Button>
-                                        <Button color="gray" onClick={ () => handleDislike(comentario['_id']) }>
+                                        <Button color="gray" onClick={ () => handleDislike(comentario['_id']) } className={ comentario.likes.map( l => l.usuario == user && l.dislike == 1 ? 'bg-gray-300' : '') }>
                                             <img src="https://www.svgrepo.com/show/521123/dislike-left.svg" className='w-5' alt="" />
-                                            { comentario.dislikes }
+                                            { calcTotal(comentario.likes, 0) }
                                         </Button>
                                     </Button.Group>
                                 </div>
